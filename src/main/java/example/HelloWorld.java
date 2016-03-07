@@ -3,6 +3,7 @@ package example;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.xml.ws.Endpoint;
+import java.util.Arrays;
 
 @WebService
 public class HelloWorld {
@@ -14,9 +15,9 @@ public class HelloWorld {
         }
 
         String port = args[0];
-        String address = "http://localhost:" + port + "/ws/hello";
+        String address = "http://0.0.0.0:" + port + "/";
         Endpoint.publish(address, new HelloWorld());
-        System.out.println("Service listening on address " + address);
+        System.out.println("Service listening on port: " + port);
     }
 
     static void printUsage(){
@@ -25,8 +26,19 @@ public class HelloWorld {
 
     @WebMethod
     public String sayHelloWorldFrom(String from) {
+        System.out.println("Received hello world request");
         String result = "Hello, world, from " + from;
-        System.out.println(result);
+        return result;
+    }
+
+    @WebMethod
+    public String requestMessage(int sizeInMb) {
+        System.out.println("Received message request");
+        char[] chars = new char[sizeInMb * 1000000];
+        Arrays.fill(chars, 'a');
+
+        String result = new String(chars);
+        System.out.println("Created payload");
         return result;
     }
 }
