@@ -32,9 +32,9 @@ public class HelloWorld {
     }
 
     @WebMethod
-    public String requestMessage(int sizeInMb) {
+    public String requestMessage(int size) {
         System.out.println("Received message request");
-        char[] chars = new char[sizeInMb * 1000000];
+        char[] chars = new char[size];
         Arrays.fill(chars, 'a');
 
         String result = new String(chars);
